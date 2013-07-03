@@ -1,0 +1,39 @@
+#!/bin/sh
+####################################################################
+#
+# Warp all lsm TAG images in flylight dir to template
+#
+####################################################################
+# Use logs dir as processing folder:
+cd /disk/data/VFB/IMAGE_DATA/Janelia2012/TG/logs/
+# scan all lsm files with 'v_' (TAG) and add to list for pre processing:
+# python ../script/findLsmFiles.py # only run once!
+# Convert 100 lsm files off list to nrrd files ready for cmtk and add to processing list:
+/disk/data/VFBTools/Fiji/fiji-linux64 ../script/preProcessFile.ijm 
+# warp background to template and pass details for signal channel warp. 
+python /disk/data/VFB/IMAGE_DATA/Janelia2012/TG/script/warpToTemplate.py
+# warp signal to template and pass details for woolz conversion. 
+python /disk/data/VFB/IMAGE_DATA/Janelia2012/TG/script/warpSignalToTemplate.py
+
+
+# Create individual tiff images for woolz
+/disk/data/VFBTools/Fiji/fiji-linux64 ../script/nrrd2tiffs.ijm
+# Create woolz stacks
+/disk/data/VFB/IMAGE_DATA/Janelia2012/TG/script/createWoolz.sh
+# create meta data for woolz stacks
+../script/createMetaData.sh
+# sort files into folders
+../script/sortStacks.sh
+
+
+
+
+
+
+# gzip all lsm files that have entered pipeline - Also unzips if ' - Done' is removed from FLpre.txt
+../script/gzipOriginalLsmFiles.sh
+
+
+
+
+
