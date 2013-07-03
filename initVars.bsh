@@ -1,0 +1,8 @@
+# Includes all important paths and sets as variables
+echo "Processing folder: " $1
+export baseDir='/disk/data/VFB/IMAGE_DATA/Janelia2012/TG' 
+export sriptDir=$baseDir'/script/'
+export stacksDir=$baseDir'/stacks/'
+export tmpDir=$baseDir'/TMP_STACKS/'
+export woolzDir='/opt/Woolz/bin/'
+export fijiBin='/disk/data/VFBTools/Fiji/fiji-linux64'
